@@ -1,0 +1,19 @@
+version: '3.3'
+services:
+
+  superset:
+    image: amancevice/superset:0.18.5
+    hostname: superset
+    ports:
+      - 8088:8088
+    volumes:
+      - ../shared_volume:/shared 
+      - stack_superset_conf:/home/superset 
+
+networks:
+  default:
+    external:
+      name: data_network
+
+volumes:
+  stack_superset_conf:

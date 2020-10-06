@@ -1,0 +1,28 @@
+version: '3.3'
+services:
+
+  notebooks_airflow:
+    image: notebooks_airflow
+    hostname: notebooks_airflow
+    ports:
+    - "1887:8888"
+    - "1888:8080"
+    - "1889:80"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../shared_volume:/shared
+      - stack_airflow_dags:/root/airflow/dags
+      - stack_jupyter_notebooks:/notebooks
+      - stack_zeppelin_notebooks:/zeppelin/notebook
+
+networks:
+  default:
+    external:
+      name: data_network
+
+volumes:
+  stack_airflow_dags:
+  stack_jupyter_notebooks:
+  stack_zeppelin_notebooks:
