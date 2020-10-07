@@ -1,5 +1,5 @@
 # Goal
-The goal of this project is to help mounting a data stack with :
+The goal of this project is to help mounting a simple data stack with all or some of this tools :
 - Apache Airflow
 - Apache Druid
 - A python 3 install with pandas / scikit / numpy / ... 
