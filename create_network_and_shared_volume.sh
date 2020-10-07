@@ -1,3 +1,5 @@
+#!/bin/sh
+
 #docker network inspect data_network
 docker network create data_network
 echo
