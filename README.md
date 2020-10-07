@@ -5,8 +5,10 @@ The goal of this project is to help mounting a simple data stack with all or som
 - A python 3 install with pandas / scikit / numpy / ... 
 - Jupyter 
 - Apache Zeppelin (an alternative to Jupyter)
-- Dataiku dss (a Tableau alternative)
-- Apache superset
+- Dataiku DSS (a French freemium alternative to Tableau with good free features)
+- Apache Superset
+
+Each of this tools are open source except Dataiku DSS.
 
 Airflow, Jupyter and Zeppelin are installed in the same container (in order to share python libs easily)
 
