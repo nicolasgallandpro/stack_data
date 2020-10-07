@@ -12,7 +12,7 @@ Airflow, Jupyter and Zeppelin are installed in the same container (in order to s
 
 Each other tool is installed in his own container
 
-The containers share a volumne (shared_volume/) and a local network. Each container has a simple host name in this container (druid, superset, ...) to make it easy to communicate between containers.
+The containers share a volumne (shared_volume/) and a local network. Each container has a simple host name in this network (druid, superset, ...) to make it easy to communicate between containers.
 
 Critical directories of each tools are stored in a docker volume in order to persist data when containers are destructed.
 
