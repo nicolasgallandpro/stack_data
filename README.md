@@ -39,13 +39,13 @@ There is no default user in superset. To create the first user, execute this scr
 # Step 6 : Connect Superset to Druid
 In this install, Superset and Druid share the same network, and the hostname of druid is "druid". 
 So, if you want to connect Superset to Druid, define a Druid Cluster in the superset UI : 
-Verbose name : druid_local
-Coordinator Host : druid
-Coordinator Port : 8081
-Coordinator Endpoint : druid/coordinator/v1/metadata
-Broker Host : druid
-Broker Port : 8082
-Broker Endpoint : druid/v2
+- Verbose name : druid_local
+- Coordinator Host : druid
+- Coordinator Port : 8081
+- Coordinator Endpoint : druid/coordinator/v1/metadata
+- Broker Host : druid
+- Broker Port : 8082
+- Broker Endpoint : druid/v2
 
 
 
