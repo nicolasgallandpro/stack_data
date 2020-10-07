@@ -1,20 +1,44 @@
-# 1. création du volume et du réseau partagé
-avant de lancer les docker-compose, créez les volume et réseau nécessaires en executant ccreate_network_and_shared_volume.sh
+# Goal
+The goal of this project is to help mounting a data stack with :
+- Apache Airflow
+- Apache Druid
+- A python 3 install with pandas / scikit / numpy / ... 
+- Jupyter 
+- Apache Zeppelin (an alternative to Jupyter)
+- Dataiku dss (a Tableau alternative)
+- Apache superset
 
-# 2. docker-compose up &
-pour chaque machine 
+Airflow, Jupyter and Zeppelin are installed in the same container (in order to share python libs easily)
 
-# 3. récupération du token jupyter 
-Pour récupérer le token demandé dans l'ui, executer le script jupyter_token.sh
+Each other tool is installed in his own container
 
-# 4. ajout de données de test dans Druid 
-Pour remplir une datasource avec des données exemple (wikipedia) suivre : https://druid.apache.org/docs/latest/tutorials/index.html
-( quickstart/tutorial/   wikiticker-2015-09-12-sampled.json.gz )
+The containers share a volumne (shared_volume/) and a local network. Each container has a simple host name in this container (druid, superset, ...) to make it easy to communicate between containers.
 
-# 5. initialisation de Superset et connexion à Druid
-Afin de pouvoir se connecter, il faut executer le script superset_init.sh
+Critical directories of each tools are stored in a docker volume in order to persist data when containers are destructed.
 
-Pour connecter superset à druid : configurer un cluster druid tel que : 
+You can find more informations in the docker-compose.yml files.
+
+If you want to enter into one of this docker container's shell, use the `ssh.sh`script.
+
+
+# Step 1 : create shared volume and network
+Before launching docker-compose up on each container you want, you should execute create_network_and_shared_volume.sh
+
+# Step 2 : docker-compose 
+Execute: `docker-compose up & ` for each container you want to use
+
+# Step 3 : get the Jupyter token
+First time you connect to jupyter, it will ask for a token. You can get the token by executing `jupyter_token.sh`
+
+# Step 4 : Inject sample data into Druid (wikipedia comments)
+More informations here : https://druid.apache.org/docs/latest/tutorials/index.html
+
+# Step 5 : Superset init
+There is no default user in superset. To create the first user, execute this script : `superset_init.sh`
+
+# Step 6 : Connect Superset to Druid
+In this install, Superset and Druid share the same network, and the hostname of druid is "druid". 
+So, if you want to connect Superset to Druid, define a Druid Cluster in the superset UI : 
 Verbose name : druid_local
 Coordinator Host : druid
 Coordinator Port : 8081
@@ -23,6 +47,6 @@ Broker Host : druid
 Broker Port : 8082
 Broker Endpoint : druid/v2
 
-# help
-pour entrer dans le bash des conteneurs, utiliser la commande ssh.sh
-airflow, jupyter, et zeppelin sont dans le même conteneur afin de partager la même install de python (python3)
+
+
+Have fun :)
