@@ -50,7 +50,7 @@ RUN echo "$LOG_TAG Install python related packages" && \
     apt-get install -y gfortran && \
     # numerical/algebra packages
     #pip3 install -q pycodestyle && \
-    python3.7 -m pip install -q numpy pandas scipy bkzep pandasql ipython matplotlib bokeh seaborn
+    python3.7 -m pip install -q numpy pandas scipy bkzep pandasql ipython matplotlib bokeh seaborn pyarrow fastparquet
 
 RUN echo "$LOG_TAG Cleanup" && \
     apt-get autoclean && \
