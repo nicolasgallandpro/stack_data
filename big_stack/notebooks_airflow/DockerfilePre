@@ -1,0 +1,59 @@
+FROM ubuntu:20.04
+
+RUN echo "************* update apt"
+RUN apt-get update && apt-get upgrade -y
+
+#bug fix blocage dans l'install
+ENV DEBIAN_FRONTEND=noninteractive 
+
+#--python &co
+RUN echo "************* python deps & co"
+RUN apt-get install wget nano procps -y 
+RUN apt install -y python3-pip
+RUN pip3 install --upgrade pip
+
+COPY python_dependencies.txt ./
+RUN pip install --no-cache-dir -r python_dependencies.txt
+
+#airflow
+RUN echo "************* airflow"
+RUN pip3 install apache-airflow[postgres,s3,druid,celery,password,redis,slack,ssh]
+RUN airflow initdb
+
+#cat $AIRFLOW_HOME/airflow-webserver.pid | xargs kill -9
+
+#jupyter
+RUN useradd -b /home -U -m jupyter
+RUN echo "************* jupyter"
+RUN pip3 install jupyter \
+        jupyterlab 
+#RUN jupyter labextension install @yeebc/jupyterlab_neon_theme
+
+#zeppelin
+RUN apt install -y openjdk-8-jdk 
+RUN apt install -y maven
+RUN echo "************* zeppelin"
+ENV Z_VERSION="0.9.0-preview2"
+ENV LOG_TAG="[ZEPPELIN_${Z_VERSION}]:" 
+ENV Z_HOME="/zeppelin"
+
+RUN echo "$LOG_TAG Download Zeppelin binary" 
+RUN wget -O /tmp/zeppelin-${Z_VERSION}-bin-all.tgz http://archive.apache.org/dist/zeppelin/zeppelin-${Z_VERSION}/zeppelin-${Z_VERSION}-bin-all.tgz 
+RUN tar -zxvf /tmp/zeppelin-${Z_VERSION}-bin-all.tgz --directory=/tmp/
+RUN rm -rf /tmp/zeppelin-${Z_VERSION}-bin-all.tgz
+RUN mv /tmp/zeppelin-${Z_VERSION}-bin-all ${Z_HOME}
+RUN echo "z_home : ${Z_HOME}"
+RUN ls /zeppelin
+
+#tuyauterie
+RUN mkdir -p /usr/local/airflow
+RUN mkdir -p /usr/local/airflow/conf
+
+ENV ZEPPELIN_ADDR="0.0.0.0"
+ENV ZEPPELIN_PORT="80"
+WORKDIR ${Z_HOME}
+WORKDIR /notebooks
+VOLUME /notebooks
+VOLUME /zeppelin
+
+

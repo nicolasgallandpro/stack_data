@@ -1,0 +1,22 @@
+version: '3.3'
+services:
+
+  druid:
+    image: druid_maison
+    hostname: druid
+    ports: 
+      - "8890:8888"
+    volumes:
+      - ../shared_volume:/shared
+      - stack_druid:/opt/druid/var
+    build: 
+      context: .
+      dockerfile: Dockerfile
+
+networks:
+  default:
+    external:
+      name: data_network
+
+volumes:
+  stack_druid:

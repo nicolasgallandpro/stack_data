@@ -1,0 +1,16 @@
+inherit_standard: true
+
+flux:
+  - id: tribunes&opinions
+    description: fs fdsfdsf dsf sfds 
+    keep_only:
+      - Tribune
+    remove: 
+      - Tribune de Genève
+      - Tribune de Lyon
+    input:
+      - https://www.lemonde.fr/idees-tribunes/rss_full.xml
+      - https://www.youtube.com/channel/UCQgWpmt02UtJkyO32HGUASQ  
+
+  - id: inrap_musees
+    description: dfgfdtrry rtert ert
